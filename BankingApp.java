@@ -20,7 +20,7 @@ public class BankingApp {
         final String SUCCESS_MSG = String.format("\t%s%s%s\n", COLOR_GREEN_BOLD, "%s", RESET);
 
         String screen = DASHBOARD;
-        String[] customers = new String[0];
+        String[] customerNames = new String[0];
         String[] account_id = new String[0];
 
         do {
@@ -56,7 +56,7 @@ public class BankingApp {
                         case 3:
                             // screen = PRINT_DETAILS;
                             break;
-                        case 4:
+                        case 7:
                             System.exit(0);
                             break;
                         default:
@@ -98,6 +98,42 @@ public class BankingApp {
                             }
                         }
                     } while (!valid);
+                    do{
+                        valid = true;
+                        System.out.print("\tEnter Customer Name: ");
+                        name = SCANNER.nextLine().strip();
+                        if (name.isBlank()){
+                            System.out.printf(ERROR_MSG, "Customer name can't be empty");
+                            valid = false;
+                            continue;
+                        }
+                        for (int i = 0; i < name.length(); i++) {
+                            if (!(Character.isLetter(name.charAt(i)) || 
+                                Character.isSpaceChar(name.charAt(i))) ) {
+                                System.out.printf(ERROR_MSG, "Invalid name");
+                                valid = false;
+                                break;
+                            }
+                        }
+                    }while(!valid);
+                    String[] newAccountIds = new String[account_id.length + 1];
+                    String[] newCustomerNames = new String[customerNames.length + 1];
+                    for (int i = 0; i < account_id.length; i++) {
+                        newAccountIds[i] = account_id[i];
+                        newCustomerNames[i] = customerNames[i];
+                    }
+                    account_id[newAccountIds.length - 1] = id;
+                    newCustomerNames[newAccountIds.length - 1] = name;
+                    account_id = newAccountIds;
+                    customerNames = newCustomerNames;
+
+                    System.out.println();
+                    System.out.printf(SUCCESS_MSG, 
+                        String.format("%s:%s has been saved successfully", id, name));
+                    System.out.print("\tDo you want to continue adding (Y/n)? ");
+                    if (SCANNER.nextLine().strip().toUpperCase().equals("Y")) continue;
+                    screen = DASHBOARD;
+                    break;
 
             }
 
