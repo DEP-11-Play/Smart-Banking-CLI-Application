@@ -51,10 +51,10 @@ public class BankingApp {
                             screen = OPEN_ACCOUNT;
                             break;
                         case 2:
-                            // screen = REMOVE_CUSTOMER;
+                            
                             break;
                         case 3:
-                            // screen = PRINT_DETAILS;
+                            
                             break;
                         case 7:
                             System.exit(0);
@@ -122,18 +122,20 @@ public class BankingApp {
                         newAccountIds[i] = account_id[i];
                         newCustomerNames[i] = customerNames[i];
                     }
-                    account_id[newAccountIds.length - 1] = id;
+                   newAccountIds[newAccountIds.length - 1] = id;
                     newCustomerNames[newAccountIds.length - 1] = name;
                     account_id = newAccountIds;
                     customerNames = newCustomerNames;
 
                     System.out.println();
                     System.out.printf(SUCCESS_MSG, 
-                        String.format("%s:%s has been saved successfully", id, name));
+                        String.format("Account ID %s:%s has created successfully", id, name));
                     System.out.print("\tDo you want to continue adding (Y/n)? ");
                     if (SCANNER.nextLine().strip().toUpperCase().equals("Y")) continue;
                     screen = DASHBOARD;
                     break;
+
+            
 
             }
 
