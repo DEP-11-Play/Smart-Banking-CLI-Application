@@ -22,6 +22,7 @@ public class BankingApp {
         String screen = DASHBOARD;
         String[] customerNames = new String[0];
         String[] account_id = new String[0];
+        double[] Balance = new double[0];
 
         do {
             final String APP_TITLE = String.format("%s%s%s",
@@ -51,10 +52,10 @@ public class BankingApp {
                             screen = OPEN_ACCOUNT;
                             break;
                         case 2:
-                            
+
                             break;
                         case 3:
-                            
+                            // screen = PRINT_DETAILS;
                             break;
                         case 7:
                             System.exit(0);
@@ -68,6 +69,7 @@ public class BankingApp {
                     String id;
                     String name;
                     boolean valid;
+                    double intialDeposit;
 
                     // ID Validation
                     do {
@@ -98,44 +100,55 @@ public class BankingApp {
                             }
                         }
                     } while (!valid);
-                    do{
+                    do {
                         valid = true;
                         System.out.print("\tEnter Customer Name: ");
                         name = SCANNER.nextLine().strip();
-                        if (name.isBlank()){
+                        if (name.isBlank()) {
                             System.out.printf(ERROR_MSG, "Customer name can't be empty");
                             valid = false;
                             continue;
                         }
                         for (int i = 0; i < name.length(); i++) {
-                            if (!(Character.isLetter(name.charAt(i)) || 
-                                Character.isSpaceChar(name.charAt(i))) ) {
+                            if (!(Character.isLetter(name.charAt(i)) ||
+                                    Character.isSpaceChar(name.charAt(i)))) {
                                 System.out.printf(ERROR_MSG, "Invalid name");
                                 valid = false;
                                 break;
                             }
                         }
-                    }while(!valid);
+                    } while (!valid);
+                    do {
+                        valid = true;
+                        System.out.print("\tIntial Deposit : ");
+                        intialDeposit = SCANNER.nextDouble();
+                        SCANNER.nextLine();
+                        if (intialDeposit < 5000) {
+                            System.out.printf(ERROR_MSG, "Insufficient Amount");
+                            valid = false;
+                            continue;
+                        }
+                    } while (!valid);
+
                     String[] newAccountIds = new String[account_id.length + 1];
                     String[] newCustomerNames = new String[customerNames.length + 1];
                     for (int i = 0; i < account_id.length; i++) {
                         newAccountIds[i] = account_id[i];
                         newCustomerNames[i] = customerNames[i];
                     }
-                   newAccountIds[newAccountIds.length - 1] = id;
+                    newAccountIds[newAccountIds.length - 1] = id;
                     newCustomerNames[newAccountIds.length - 1] = name;
                     account_id = newAccountIds;
                     customerNames = newCustomerNames;
 
                     System.out.println();
-                    System.out.printf(SUCCESS_MSG, 
-                        String.format("Account ID %s:%s has created successfully", id, name));
+                    System.out.printf(SUCCESS_MSG,
+                            String.format("Bank Account ID %s:%s has created successfully", id, name));
                     System.out.print("\tDo you want to continue adding (Y/n)? ");
-                    if (SCANNER.nextLine().strip().toUpperCase().equals("Y")) continue;
+                    if (SCANNER.nextLine().strip().toUpperCase().equals("Y"))
+                        continue;
                     screen = DASHBOARD;
                     break;
-
-            
 
             }
 
